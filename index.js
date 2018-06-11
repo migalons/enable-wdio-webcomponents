@@ -10,6 +10,4 @@ module.exports = function (driver) {
     driver.addCommand('elements', function () {
         return elements.apply(this, arguments);
     }, true);
-
-    console.log("Custom commands loaded!")
 };

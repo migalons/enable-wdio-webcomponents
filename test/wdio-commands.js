@@ -2,6 +2,14 @@ const wdio = require("webdriverio");
 const customCommands = require("../index");
 const chai = require("chai");
 
+const capabilities = {
+    desiredCapabilities: {
+        browserName: "chrome",
+        chromeOptions: {
+            args: ["headless", "disable-gpu"]
+        }
+    }
+};
 
 describe("Webcomponent test", async function () {
     let driver;
@@ -10,15 +18,7 @@ describe("Webcomponent test", async function () {
     this.timeout(10000);
 
     before(function () {
-        driver = wdio.remote(
-            {
-                desiredCapabilities: {
-                    browserName: "chrome",
-                    chromeOptions: {
-                        args: ["headless", "disable-gpu"]
-                    }
-                }
-            });
+        driver = wdio.remote(capabilities);
         customCommands(driver);
     });
 
