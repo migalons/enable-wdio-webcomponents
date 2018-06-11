@@ -41,6 +41,33 @@ describe("Webcomponent test", async function () {
         })
     });
 
+    it('should waitForVisible on visible elements', async () => {
+        await driver.url("https://shop.polymer-project.org/list/mens_outerwear");
+        await driver.waitForVisible("shop-app app-header app-toolbar .logo")
+    });
+
+    it('should isVisible returning true on visible elements', async () => {
+        await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Men+s+Tech+Shell+Full-Zip").pause(1000);
+        await driver.isVisible("shop-app shop-detail .price").then((isVisible) => {
+            isVisible.should.be.true;
+        })
+    });
+
+    it('should isVisible returning false on non visible elements', async () => {
+        await driver.url("https://shop.polymer-project.org/list/mens_outerwear").pause(1000);
+        await driver.isVisible("shop-app shop-detail .price").then((isVisible) => {
+            isVisible.should.be.false;
+        })
+    });
+
+    it('should select a value from list', async () => {
+        await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Anvil+L+S+Crew+Neck+-+Grey").pause(1000);
+        await driver.selectByValue("shop-app shop-detail #sizeSelect", "XS");
+        await driver.getValue("shop-app shop-detail #sizeSelect").then((isVisible) => {
+            isVisible.should.equal("XS");
+        })
+    });
+
     afterEach(async () => {
         await driver.end();
     });
