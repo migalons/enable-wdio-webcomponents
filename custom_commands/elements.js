@@ -1,4 +1,4 @@
-const findElement = require("./findElement");
+const findElements = require("./findElements");
 const splitWhitespaceKeepQuoted = require("../lib/splitWhitespaceKeepQuoted");
 
 let notFound = function (sessionId, selector) {
@@ -16,13 +16,8 @@ let notFound = function (sessionId, selector) {
 
 module.exports = function (selector) {
     let selectorArray = splitWhitespaceKeepQuoted(selector);
-    return this.execute(findElement, selectorArray)
+    return this.execute(findElements, selectorArray)
         .then((result) => {
-            const myResult = Object.assign({}, result, {selector: selector});
-            if (result.value !== null) {
-                return myResult;
-            } else {
-                return notFound(result.sessionId, selector);
-            }
+            return Object.assign({}, result, {selector: selector});
         });
 };

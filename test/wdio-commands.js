@@ -26,11 +26,18 @@ describe("Webcomponent test", async function () {
         await driver.init();
     })
 
-    it('click', async () => {
+    it('should perform a click', async () => {
         await driver.url("https://shop.polymer-project.org").pause(1000);
         await driver.click("shop-app shop-home shop-button").pause(1000);
         await driver.getTitle().then((title) => {
             title.should.equal("Men's Outerwear - SHOP")
+        })
+    });
+
+    it('should perform getText', async () => {
+        await driver.url("https://shop.polymer-project.org/list/mens_outerwear").pause(1000);
+        await driver.getText("shop-app app-header app-toolbar .logo").then((text) => {
+            text.should.equal("SHOP")
         })
     });
 

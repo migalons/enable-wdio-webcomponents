@@ -1,25 +1,19 @@
 module.exports = function (selector) {
 
-
-
     function query(baseElement, selector) {
-        let shadowElement, commonElement;
+        let shadowElement;
 
         if(baseElement.shadowRoot) {
             shadowElement = baseElement.shadowRoot.querySelector(selector);
         }
-        let element = baseElement.querySelector(selector)
-
         if(shadowElement) {
             return shadowElement;
         } else {
-            return element;
+            return baseElement.querySelector(selector);
         }
     }
 
     function innerFindElement(selectors) {
-        selectors = selectors.filter((item) => item);
-
         let currentElement = document.documentElement;
         for (let i = 0; i < selectors.length; i++) {
             currentElement = query(currentElement, selectors[i]);
@@ -30,10 +24,10 @@ module.exports = function (selector) {
         return currentElement;
     }
 
-
     if(document.body.createShadowRoot || document.body.attachShadow) {
-        return innerFindElement(selector.split(' '));
+        return innerFindElement(selector);
     } else {
-        return innerFindElement([selector])
+        return innerFindElement([selector.join(' ')])
     }
+
 };
