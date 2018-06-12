@@ -18,7 +18,6 @@ module.exports = function (selector) {
     let selectorArray = splitWhitespaceKeepQuoted(selector);
     return this.execute(findElements, selectorArray)
         .then((result) => {
-            console.log(JSON.stringify(result))
             let myResult = Object.assign({}, result, {value: result.value[0]}, {selector: selector});
             if (result.value !== null) {
                 return myResult;

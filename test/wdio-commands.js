@@ -63,14 +63,15 @@ describe("Webcomponent test", async function () {
     it('should select a value from list', async () => {
         await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Anvil+L+S+Crew+Neck+-+Grey").pause(1000);
         await driver.selectByValue("shop-app shop-detail #sizeSelect", "XS");
-        await driver.getValue("shop-app shop-detail #sizeSelect").then((isVisible) => {
-            isVisible.should.equal("XS");
+        await driver.getValue("shop-app shop-detail #sizeSelect").then((value) => {
+            value.should.equal("XS");
         })
     });
 
+
     it('shoud support complex css selectors', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear")
-        await driver.click("shop-app shop-list shop-list-item shop-image [alt='Rowan Pullover Hood']").pause(1000);
+        await driver.click("shop-app shop-list shop-list-item  shop-image [alt='Rowan Pullover Hood']").pause(1000);
         await driver.getTitle().then(function (title) {
             title.should.equal("Rowan Pullover Hood - SHOP");
         })

@@ -1,4 +1,4 @@
-module.exports = function (selector) {
+module.exports = function findElements(selector) {
 
     function concat (array, items) {
         for(let i = 0; i < items.length; i++) {
