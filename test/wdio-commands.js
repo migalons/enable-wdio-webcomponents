@@ -71,7 +71,7 @@ describe("Webcomponent test", async function () {
 
     it('shoud support complex css selectors', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear")
-        await driver.click("shop-app shop-list shop-list-item  shop-image [alt='Rowan Pullover Hood']").pause(1000);
+        await driver.click("shop-app shop-list shop-list-item shop-image [alt='Rowan Pullover Hood']").pause(1000);
         await driver.getTitle().then(function (title) {
             title.should.equal("Rowan Pullover Hood - SHOP");
         })
