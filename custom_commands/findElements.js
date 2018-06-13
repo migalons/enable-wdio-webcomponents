@@ -7,25 +7,30 @@ module.exports = function findElements(selector) {
         return array;
     }
 
+    function getChildren(baseElement) {
+        let children = [], nextChildren = [];
+        if(baseElement.shadowRoot) {
+            concat(children, baseElement.shadowRoot.children)
+        }
+        concat(children, baseElement.children);
+
+        for(let i = 0; i < children.length; i++) {
+            concat(nextChildren, getChildren(children[i]));
+        }
+
+        return concat(children, nextChildren)
+    }
+
     function queryAll(baseElements, selector) {
-        let shadowElements, commonElements;
         let found = [];
 
         for(let i = 0; i < baseElements.length; i++) {
-            let baseElement = baseElements[i];
-            if(baseElement.shadowRoot) {
-                shadowElements = baseElement.shadowRoot.querySelectorAll(selector);
-                if(shadowElements && shadowElements.length > 0) {
-                    found = concat(found, shadowElements);
-                }
-            }
-            let commonElements = baseElement.querySelectorAll(selector);
-            if(commonElements && commonElements.length > 0) {
-                found = concat(found, commonElements);
-            }
+            concat(found, getChildren(baseElements[i]))
         }
 
-        return found;
+        return found.filter(function (element) {
+            return element.matches(selector)
+        });
     }
 
     function innerFindElements(selectors) {

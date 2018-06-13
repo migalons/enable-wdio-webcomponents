@@ -6,7 +6,7 @@ const capabilities = {
     desiredCapabilities: {
         browserName: "chrome",
         chromeOptions: {
-            args: ["headless", "disable-gpu"]
+            args: ["headless", "disable-cpu"]
         }
     }
 };
@@ -28,7 +28,7 @@ describe("Webcomponent test", async function () {
 
     it('should perform a click', async () => {
         await driver.url("https://shop.polymer-project.org").pause(1000);
-        await driver.click("shop-app shop-home shop-button").pause(1000);
+        await driver.click("shop-home shop-button").pause(1000);
         await driver.getTitle().then((title) => {
             title.should.equal("Men's Outerwear - SHOP")
         })
@@ -36,34 +36,34 @@ describe("Webcomponent test", async function () {
 
     it('should perform getText', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear").pause(1000);
-        await driver.getText("shop-app app-header app-toolbar .logo").then((text) => {
+        await driver.getText("app-toolbar .logo").then((text) => {
             text.should.equal("SHOP")
         })
     });
 
     it('should waitForVisible on visible elements', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear");
-        await driver.waitForVisible("shop-app app-header app-toolbar .logo")
+        await driver.waitForVisible("app-header app-toolbar .logo")
     });
 
     it('should isVisible returning true on visible elements', async () => {
         await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Men+s+Tech+Shell+Full-Zip").pause(1000);
-        await driver.isVisible("shop-app shop-detail .price").then((isVisible) => {
+        await driver.isVisible("shop-detail .price").then((isVisible) => {
             isVisible.should.be.true;
         })
     });
 
     it('should isVisible returning false on non visible elements', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear").pause(1000);
-        await driver.isVisible("shop-app shop-detail .price").then((isVisible) => {
+        await driver.isVisible("shop-detail .price").then((isVisible) => {
             isVisible.should.be.false;
         })
     });
 
     it('should select a value from list', async () => {
-        await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Anvil+L+S+Crew+Neck+-+Grey").pause(1000);
-        await driver.selectByValue("shop-app shop-detail #sizeSelect", "XS");
-        await driver.getValue("shop-app shop-detail #sizeSelect").then((value) => {
+        await driver.url("https://shop.polymer-project.org/detail/mens_outerwear/Anvil+L+S+Crew+Neck+-+Grey").pause(2000);
+        await driver.selectByValue("#sizeSelect", "XS");
+        await driver.getValue("#sizeSelect").then((value) => {
             value.should.equal("XS");
         })
     });
@@ -71,7 +71,7 @@ describe("Webcomponent test", async function () {
 
     it('shoud support complex css selectors', async () => {
         await driver.url("https://shop.polymer-project.org/list/mens_outerwear")
-        await driver.click("shop-app shop-list shop-list-item shop-image [alt='Rowan Pullover Hood']").pause(1000);
+        await driver.click("shop-image [alt='Rowan Pullover Hood']").pause(2000);
         await driver.getTitle().then(function (title) {
             title.should.equal("Rowan Pullover Hood - SHOP");
         })

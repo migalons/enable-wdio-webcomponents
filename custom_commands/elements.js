@@ -17,7 +17,7 @@ let notFound = function (sessionId, selector) {
 module.exports = function (selector) {
     let selectorArray = splitWhitespaceKeepQuoted(selector);
     return this.execute(findElements, selectorArray)
-        .then((result) => {
+        .then((result) => {;
             return Object.assign({}, result, {selector: selector});
         });
 };
